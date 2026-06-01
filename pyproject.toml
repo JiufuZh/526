@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "group8-defect-llm"
+version = "0.1.0"
+description = "Function-level code defect detection with baselines and Qwen2.5 LoRA/QLoRA SFT."
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]

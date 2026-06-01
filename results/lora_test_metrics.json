@@ -1,0 +1,26 @@
+{
+  "accuracy": 0.5523426061493412,
+  "macro_precision": 0.5508158708347647,
+  "macro_recall": 0.5510737011331789,
+  "macro_f1": 0.5507037558432288,
+  "defective_precision": 0.5121951219512195,
+  "defective_recall": 0.5354581673306773,
+  "defective_f1": 0.5235683677444488,
+  "confusion_matrix": [
+    [
+      837,
+      640
+    ],
+    [
+      583,
+      672
+    ]
+  ],
+  "tn": 837,
+  "fp": 640,
+  "fn": 583,
+  "tp": 672,
+  "nonconforming_output_rate": 0.0,
+  "adapter_path": "outputs/qwen25_7b_lora_bf16_512/final_adapter",
+  "classification_mode": "logprob"
+}

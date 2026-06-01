@@ -1,0 +1,23 @@
+{
+  "accuracy": 0.5406295754026355,
+  "macro_precision": 0.2703147877013177,
+  "macro_recall": 0.5,
+  "macro_f1": 0.35091470658113566,
+  "defective_precision": 0.0,
+  "defective_recall": 0.0,
+  "defective_f1": 0.0,
+  "confusion_matrix": [
+    [
+      1477,
+      0
+    ],
+    [
+      1255,
+      0
+    ]
+  ],
+  "tn": 1477,
+  "fp": 0,
+  "fn": 1255,
+  "tp": 0
+}

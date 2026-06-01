@@ -1,0 +1,161 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Map:   0%|          | 0/21854 [00:00<?, ? examples/s]
+Map:   5%|▍         | 1000/21854 [00:00<00:19, 1051.48 examples/s]
+Map:   9%|▉         | 2000/21854 [00:01<00:17, 1110.29 examples/s]
+Map:  14%|█▎        | 3000/21854 [00:02<00:18, 1023.21 examples/s]
+Map:  18%|█▊        | 4000/21854 [00:03<00:18, 986.14 examples/s] 
+Map:  23%|██▎       | 5000/21854 [00:04<00:15, 1056.86 examples/s]
+Map:  27%|██▋       | 6000/21854 [00:05<00:14, 1061.37 examples/s]
+Map:  32%|███▏      | 7000/21854 [00:06<00:13, 1093.11 examples/s]
+Map:  37%|███▋      | 8000/21854 [00:07<00:12, 1124.99 examples/s]
+Map:  41%|████      | 9000/21854 [00:08<00:11, 1160.84 examples/s]
+Map:  46%|████▌     | 10000/21854 [00:09<00:10, 1147.91 examples/s]
+Map:  50%|█████     | 11000/21854 [00:09<00:09, 1140.95 examples/s]
+Map:  55%|█████▍    | 12000/21854 [00:10<00:08, 1118.63 examples/s]
+Map:  59%|█████▉    | 13000/21854 [00:11<00:07, 1127.67 examples/s]
+Map:  64%|██████▍   | 14000/21854 [00:12<00:06, 1141.84 examples/s]
+Map:  69%|██████▊   | 15000/21854 [00:13<00:06, 1116.01 examples/s]
+Map:  73%|███████▎  | 16000/21854 [00:14<00:05, 1104.20 examples/s]
+Map:  78%|███████▊  | 17000/21854 [00:15<00:04, 1126.53 examples/s]
+Map:  82%|████████▏ | 18000/21854 [00:16<00:03, 1042.11 examples/s]
+Map:  87%|████████▋ | 19000/21854 [00:17<00:02, 1079.69 examples/s]
+Map:  92%|█████████▏| 20000/21854 [00:18<00:01, 1061.85 examples/s]
+Map:  96%|█████████▌| 21000/21854 [00:19<00:00, 1080.28 examples/s]
+Map: 100%|██████████| 21854/21854 [00:19<00:00, 1083.58 examples/s]
+Map: 100%|██████████| 21854/21854 [00:19<00:00, 1093.12 examples/s]
+
+Map:   0%|          | 0/2732 [00:00<?, ? examples/s]
+Map:  37%|███▋      | 1000/2732 [00:00<00:01, 1041.61 examples/s]
+Map:  73%|███████▎  | 2000/2732 [00:01<00:00, 1131.15 examples/s]
+Map: 100%|██████████| 2732/2732 [00:02<00:00, 1143.80 examples/s]
+Map: 100%|██████████| 2732/2732 [00:02<00:00, 1126.97 examples/s]
+
+Map:   0%|          | 0/2732 [00:00<?, ? examples/s]
+Map:  37%|███▋      | 1000/2732 [00:00<00:01, 1049.90 examples/s]
+Map:  73%|███████▎  | 2000/2732 [00:01<00:00, 1146.28 examples/s]
+Map: 100%|██████████| 2732/2732 [00:02<00:00, 1119.84 examples/s]
+Map: 100%|██████████| 2732/2732 [00:02<00:00, 1114.24 examples/s]
+
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 197/197 [00:00<00:00, 44830.88it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: microsoft/graphcodebert-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.decoder.weight     | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.decoder.bias       | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+
+  0%|          | 0/8196 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/gpfs/projects/imt526a/group8/final/scripts/train_encoder_baseline.py", line 90, in <module>
+    main()
+  File "/gpfs/projects/imt526a/group8/final/scripts/train_encoder_baseline.py", line 78, in main
+    trainer.train()
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/trainer.py", line 1427, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/trainer.py", line 1509, in _inner_training_loop
+    self._run_epoch(
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/trainer.py", line 1737, in _run_epoch
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/trainer.py", line 1909, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/trainer.py", line 1981, in compute_loss
+    outputs = model(**inputs)
+              ^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/accelerate/utils/operations.py", line 823, in forward
+    return model_forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/accelerate/utils/operations.py", line 811, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/amp/autocast_mode.py", line 44, in decorate_autocast
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/utils/generic.py", line 900, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 948, in forward
+    outputs = self.roberta(
+              ^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/utils/generic.py", line 976, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/utils/output_capturing.py", line 248, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 630, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 513, in forward
+    hidden_states = layer_module(
+                    ^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 434, in forward
+    self_attention_output, _ = self.attention(
+                               ^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 365, in forward
+    attention_output, attn_weights = self.self(
+                                     ^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/models/roberta/modeling_roberta.py", line 243, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/projects/imt526a/jiufuzh/conda/envs/imt526/lib/python3.11/site-packages/transformers/integrations/sdpa_attention.py", line 92, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: cuDNN Frontend error: [cudnn_frontend] Error: No valid execution plans built.
+
+  0%|          | 0/8196 [00:05<?, ?it/s]
