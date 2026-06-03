@@ -1,5 +1,13 @@
 | source_file | accuracy | macro_f1 | defective_f1 | defective_recall | tn | fp | fn | tp |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| results/zero_shot_validation_metrics.json | 0.5201 | 0.5086 | 0.4332 | 0.4221 | 920 | 625 | 686 | 501 |
+| results/zero_shot_test_metrics.json | 0.5264 | 0.5180 | 0.4545 | 0.4295 | 899 | 578 | 716 | 539 |
+| results/four_shot_validation_metrics.json | 0.5655 | 0.3612 | 0.0000 | 0.0000 | 1545 | 0 | 1187 | 0 |
+| results/four_shot_test_metrics.json | 0.5406 | 0.3509 | 0.0000 | 0.0000 | 1477 | 0 | 1255 | 0 |
+| results/lora_validation_metrics.json | 0.5556 | 0.5509 | 0.5045 | 0.5206 | 900 | 645 | 569 | 618 |
+| results/lora_test_metrics.json | 0.5523 | 0.5507 | 0.5236 | 0.5355 | 837 | 640 | 583 | 672 |
+| results/graphcodebert_validation_metrics.json | 0.6618 | 0.6513 | 0.5908 | 0.5619 | 1141 | 404 | 520 | 667 |
+| results/graphcodebert_test_metrics.json | 0.6589 | 0.6517 | 0.6017 | 0.5610 | 1096 | 381 | 551 | 704 |
 | outputs/baselines/majority_validation_metrics.json | 0.5655 | 0.3612 | 0.0000 | 0.0000 | 1545 | 0 | 1187 | 0 |
 | outputs/baselines/tfidf_linear_svm_validation_metrics.json | 0.6182 | 0.6144 | 0.5762 | 0.5973 | 980 | 565 | 478 | 709 |
 | outputs/baselines/tfidf_logreg_validation_metrics.json | 0.6464 | 0.6441 | 0.6158 | 0.6521 | 992 | 553 | 413 | 774 |

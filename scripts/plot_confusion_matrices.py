@@ -15,6 +15,8 @@ RUNS = [
     ("4-shot Test", RESULTS / "four_shot_test_metrics.json"),
     ("LoRA Validation", RESULTS / "lora_validation_metrics.json"),
     ("LoRA Test", RESULTS / "lora_test_metrics.json"),
+    ("GraphCodeBERT Validation", RESULTS / "graphcodebert_validation_metrics.json"),
+    ("GraphCodeBERT Test", RESULTS / "graphcodebert_test_metrics.json"),
 ]
 
 
@@ -105,12 +107,13 @@ def main():
         img.save(output)
         images.append((title, img))
 
-    overview = Image.new("RGB", (1440, 1860), "white")
+    rows = (len(images) + 1) // 2
+    overview = Image.new("RGB", (1440, 80 + rows * 600 + 40), "white")
     draw = ImageDraw.Draw(overview)
     heading = "Confusion Matrices for Completed Runs"
     draw.text((720 - draw.textlength(heading, font=TITLE) / 2, 24), heading, font=TITLE, fill=(20, 43, 73))
 
-    positions = [(0, 80), (720, 80), (0, 680), (720, 680), (0, 1280), (720, 1280)]
+    positions = [(720 * col, 80 + 600 * row) for row in range(rows) for col in range(2)]
     for (_, img), pos in zip(images, positions):
         overview.paste(img, pos)
 

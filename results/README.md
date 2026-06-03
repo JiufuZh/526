@@ -17,23 +17,27 @@ checkpoints, cached datasets, and Hugging Face model files.
 | Qwen 4-shot | test | 0.5406 | 0.3509 | 0.0000 | Collapsed to non-defective predictions |
 | Qwen LoRA fine-tuned | validation | 0.5556 | 0.5509 | 0.5045 | Main fine-tuned LLM result |
 | Qwen LoRA fine-tuned | test | 0.5523 | 0.5507 | 0.5236 | Main fine-tuned LLM result |
+| GraphCodeBERT | validation | 0.6618 | 0.6513 | 0.5908 | Strongest validation result |
+| GraphCodeBERT | test | 0.6589 | 0.6517 | 0.6017 | Strongest test result |
 
-## GraphCodeBERT Attempt
+## GraphCodeBERT Baseline
 
-The first GraphCodeBERT Slurm attempt ran as job `131579` and failed after about
-52 seconds. The captured error log is in `results/logs/graphcodebert-131579.err`.
-The tail of the error shows:
+The initial GraphCodeBERT attempts exposed three implementation issues that were
+fixed before the final run:
 
-`RuntimeError: cuDNN Frontend error: [cudnn_frontend] Error: No valid execution plans built.`
+- H200/cuDNN attention incompatibility, fixed by forcing eager attention and disabling cuDNN SDPA.
+- Binary classification loss mismatch, fixed by forcing `single_label_classification`.
+- Boolean labels entering cross entropy, fixed by casting labels to `long` in the trainer loss path.
 
-This means the GraphCodeBERT baseline still needs a rerun with a safer attention
-backend or adjusted Torch/cuDNN settings before it can be used as a final baseline.
+The final GraphCodeBERT run completed successfully and produced validation and
+test metrics. It is the strongest baseline in the current result matrix.
 
 ## Important Files
 
 - `lora_validation_metrics.json` and `lora_test_metrics.json`: final LoRA metrics.
 - `zero_shot_*_metrics.json`: zero-shot baseline metrics.
 - `four_shot_*_metrics.json`: 4-shot baseline metrics.
+- `graphcodebert_*_metrics.json`: GraphCodeBERT validation/test metrics.
 - `report_ready_metrics.csv` and `report_ready_metrics.md`: compact report tables.
 - `error_analysis_*_taxonomy.csv`: error-analysis summaries.
-- `logs/graphcodebert-131579.err`: failed GraphCodeBERT run log.
+- `logs/graphcodebert-131579.err`: first failed GraphCodeBERT run log kept for provenance.
