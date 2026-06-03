@@ -55,7 +55,13 @@ def main():
         attn_implementation=str(ecfg.get("attn_implementation", "eager")),
     )
     model.config.problem_type = "single_label_classification"
-    collator = DataCollatorWithPadding(tokenizer=tokenizer)
+    base_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+
+    def collator(features):
+        batch = base_collator(features)
+        if "labels" in batch:
+            batch["labels"] = batch["labels"].long()
+        return batch
 
     def compute_metrics(eval_pred):
         logits, labels = eval_pred
