@@ -40,6 +40,11 @@ def main():
 
     tokenized = ds.map(tok, batched=True)
     tokenized = tokenized.rename_column(label_col, "labels") if label_col != "labels" else tokenized
+
+    def cast_labels(batch):
+        return {"labels": [int(label) for label in batch["labels"]]}
+
+    tokenized = tokenized.map(cast_labels, batched=True)
     keep_cols = {"input_ids", "attention_mask", "labels"}
     drop_cols = [c for c in tokenized["train"].column_names if c not in keep_cols]
     tokenized = tokenized.remove_columns(drop_cols)
@@ -49,6 +54,7 @@ def main():
         num_labels=2,
         attn_implementation=str(ecfg.get("attn_implementation", "eager")),
     )
+    model.config.problem_type = "single_label_classification"
     collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     def compute_metrics(eval_pred):
