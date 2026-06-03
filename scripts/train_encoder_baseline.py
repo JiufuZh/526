@@ -5,7 +5,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments
+from transformers.trainer_utils import get_last_checkpoint
 
 from defect_detection.config import ensure_dirs, load_yaml
 from defect_detection.data import load_or_download_dataset
@@ -18,6 +20,11 @@ def main():
     parser.add_argument("--config", required=True)
     args = parser.parse_args()
     cfg = load_yaml(args.config)
+    torch.backends.cuda.enable_flash_sdp(False)
+    torch.backends.cuda.enable_mem_efficient_sdp(False)
+    torch.backends.cuda.enable_math_sdp(True)
+    if hasattr(torch.backends.cuda, "enable_cudnn_sdp"):
+        torch.backends.cuda.enable_cudnn_sdp(False)
     seed = int(cfg["project"].get("seed", 42))
     set_seed(seed)
     run_dir = ensure_dirs({**cfg, "training": {"run_name": cfg["encoder"]["run_name"]}})
@@ -37,7 +44,11 @@ def main():
     drop_cols = [c for c in tokenized["train"].column_names if c not in keep_cols]
     tokenized = tokenized.remove_columns(drop_cols)
 
-    model = AutoModelForSequenceClassification.from_pretrained(ecfg["model_name"], num_labels=2)
+    model = AutoModelForSequenceClassification.from_pretrained(
+        ecfg["model_name"],
+        num_labels=2,
+        attn_implementation=str(ecfg.get("attn_implementation", "eager")),
+    )
     collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     def compute_metrics(eval_pred):
@@ -75,7 +86,9 @@ def main():
         data_collator=collator,
         compute_metrics=compute_metrics,
     )
-    trainer.train()
+    checkpoint_dir = run_dir / "checkpoints"
+    resume_from_checkpoint = get_last_checkpoint(str(checkpoint_dir)) if checkpoint_dir.exists() else None
+    trainer.train(resume_from_checkpoint=resume_from_checkpoint)
     metrics = trainer.evaluate(tokenized["validation"])
     save_json(metrics, run_dir / "validation_metrics.json")
     preds = trainer.predict(tokenized["validation"])

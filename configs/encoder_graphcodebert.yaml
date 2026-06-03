@@ -30,4 +30,5 @@ encoder:
   save_total_limit: 2
   bf16: true
   fp16: false
-  report_to: wandb
+  attn_implementation: eager
+  report_to: none
