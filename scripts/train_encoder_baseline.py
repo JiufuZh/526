@@ -15,6 +15,13 @@ from defect_detection.io_utils import save_json, set_seed
 from defect_detection.metrics import compute_binary_metrics
 
 
+class IntLabelTrainer(Trainer):
+    def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+        if "labels" in inputs:
+            inputs["labels"] = inputs["labels"].long()
+        return super().compute_loss(model, inputs, return_outputs=return_outputs, **kwargs)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -90,7 +97,7 @@ def main():
         metric_for_best_model="macro_f1",
         greater_is_better=True,
     )
-    trainer = Trainer(
+    trainer = IntLabelTrainer(
         model=model,
         args=training_args,
         train_dataset=tokenized["train"],
