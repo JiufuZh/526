@@ -8,7 +8,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
-OUT = ROOT / "demo_answer_version.ipynb"
+OUT = ROOT / "demo.ipynb"
 
 
 METRIC_FILES = {
@@ -110,10 +110,10 @@ def main():
     cells = [
         md_cell(
             """
-# Group 8 Demo Answer Version
+# Group 8 Demo Notebook
 
 **Project:** Code Defect Detection with Qwen, LoRA Fine-Tuning, and GraphCodeBERT  
-**Purpose of this notebook:** This is the ready-to-show demo version. The result cells are already populated, so we can present without retraining any model live.
+**Purpose of this notebook:** This is the ready-to-show demo notebook. The result cells are already populated, so the project can be presented without retraining any model live.
 
 **Demo introduction:**  
 This project asks whether prompt-only large language models are enough for code defect detection, or whether task adaptation and code-specific pretraining are necessary.
@@ -279,7 +279,7 @@ Recommended live clicks:
 2. Open `results/figures/confusion_matrices_overview.png`.
 3. Open `scripts/train_encoder_baseline.py` and `scripts/evaluate_encoder_baseline.py`.
 4. Open `configs/encoder_graphcodebert.yaml`.
-5. Point out that `demo_answer_version.ipynb` reads completed outputs and does not require retraining.
+5. Point out that `demo.ipynb` reads completed outputs and does not require retraining.
 """
         ),
         code_cell(
