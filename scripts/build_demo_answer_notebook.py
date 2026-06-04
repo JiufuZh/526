@@ -89,17 +89,6 @@ def main():
 
     all_output = all_results.to_string(index=False, float_format=lambda x: f"{x:.4f}") + "\n"
     test_output = test_view.to_string(index=False, float_format=lambda x: f"{x:.4f}") + "\n"
-    artifact_lines = []
-    for path in [
-        RESULTS / "report_ready_metrics.md",
-        RESULTS / "graphcodebert_test_metrics.json",
-        RESULTS / "lora_test_metrics.json",
-        RESULTS / "zero_shot_test_metrics.json",
-        RESULTS / "four_shot_test_metrics.json",
-        RESULTS / "figures" / "confusion_matrices_overview.png",
-    ]:
-        artifact_lines.append(f"{path.relative_to(ROOT)}: {'OK' if path.exists() else 'MISSING'}")
-
     confusion_lines = []
     for _, row in test_df.iterrows():
         matrix = [[int(row["tn"]), int(row["fp"])], [int(row["fn"]), int(row["tp"])]]
@@ -268,39 +257,7 @@ This figure makes the model behavior visible. The 4-shot and majority baselines 
         ),
         md_cell(
             """
-## 8. Demo Walkthrough
-
-This section identifies the main project artifacts. The code and outputs are organized in the GitHub repository: key scripts are in `scripts/`, configurations are in `configs/`, and final metrics and figures are in `results/`.
-
-Demo artifact checklist:
-
-1. `results/report_ready_metrics.md`: final metrics table.
-2. `results/figures/confusion_matrices_overview.png`: visual comparison of model behavior.
-3. `scripts/train_encoder_baseline.py` and `scripts/evaluate_encoder_baseline.py`: GraphCodeBERT training and evaluation.
-4. `configs/encoder_graphcodebert.yaml`: GraphCodeBERT experiment configuration.
-5. `demo.ipynb`: completed demo notebook that reads saved outputs.
-"""
-        ),
-        code_cell(
-            """
-artifact_paths = [
-    RESULTS / "report_ready_metrics.md",
-    RESULTS / "graphcodebert_test_metrics.json",
-    RESULTS / "lora_test_metrics.json",
-    RESULTS / "zero_shot_test_metrics.json",
-    RESULTS / "four_shot_test_metrics.json",
-    RESULTS / "figures" / "confusion_matrices_overview.png",
-]
-
-for path in artifact_paths:
-    print(f"{path.relative_to(ROOT)}: {'OK' if path.exists() else 'MISSING'}")
-""",
-            "\n".join(artifact_lines) + "\n",
-            4,
-        ),
-        md_cell(
-            """
-## 9. Limitations and Future Work
+## 8. Limitations and Future Work
 
 This section frames the limitations. The project does not claim to solve defect detection completely. The best model is GraphCodeBERT, but its test Macro-F1 is about 0.65, so there is still room for improvement.
 
@@ -315,7 +272,7 @@ Future work:
         ),
         md_cell(
             """
-## 10. Closing Statement
+## 9. Closing Statement
 
 The final conclusion is that prompt-only LLMs are not reliable enough for this code defect detection task. Traditional TF-IDF baselines are surprisingly strong, LoRA fine-tuning helps the LLM, and GraphCodeBERT gives the best balanced performance. This suggests that task supervision and code-aware modeling are both important for practical defect detection.
 
