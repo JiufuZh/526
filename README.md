@@ -27,7 +27,18 @@ pip install -e .
 python scripts/prepare_data.py --config configs/default.yaml
 python scripts/profile_tokens.py --config configs/default.yaml
 python scripts/run_baselines.py --config configs/default.yaml
+python scripts/run_baselines.py --config configs/default.yaml --eval-split test
 ```
+
+Completed held-out test results for the traditional CPU baselines:
+
+| Baseline | Accuracy | Macro-F1 | Defective-F1 | Defective recall |
+|---|---:|---:|---:|---:|
+| Majority baseline | 0.5406 | 0.3509 | 0.0000 | 0.0000 |
+| TF-IDF + Linear SVM | 0.6007 | 0.5994 | 0.5766 | 0.5920 |
+| TF-IDF + Logistic Regression | 0.6223 | 0.6218 | 0.6088 | 0.6398 |
+
+The Logistic Regression baseline is the strongest traditional CPU baseline and is competitive with the neural models on Defective-F1.
 
 ## H200 LoRA smoke test
 

@@ -12,7 +12,7 @@ checkpoints, cached datasets, and Hugging Face model files.
 | Experiment | Split | Accuracy | Macro-F1 | Defective-F1 | Notes |
 |---|---:|---:|---:|---:|---|
 | Qwen zero-shot | validation | 0.5201 | 0.5086 | 0.4332 | Frozen prompt baseline |
-| Qwen zero-shot | test | 0.5263 | 0.5170 | 0.4825 | Frozen prompt baseline |
+| Qwen zero-shot | test | 0.5264 | 0.5180 | 0.4545 | Frozen prompt baseline |
 | Qwen 4-shot | validation | 0.5655 | 0.3612 | 0.0000 | Collapsed to non-defective predictions |
 | Qwen 4-shot | test | 0.5406 | 0.3509 | 0.0000 | Collapsed to non-defective predictions |
 | Qwen LoRA fine-tuned | validation | 0.5556 | 0.5509 | 0.5045 | Main fine-tuned LLM result |

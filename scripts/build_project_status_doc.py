@@ -160,7 +160,7 @@ add_table(
         [
             "Zero-shot Qwen",
             "Acc 0.5201\nMacro-F1 0.5086\nDefective-F1 0.4332",
-            "Acc 0.5263\nMacro-F1 0.5170\nDefective-F1 0.4825",
+            "Acc 0.5264\nMacro-F1 0.5180\nDefective-F1 0.4545",
             "无训练基线；能做出一些判断，但缺陷类识别仍弱。",
         ],
         [
@@ -173,7 +173,7 @@ add_table(
             "LoRA fine-tuned Qwen",
             "Acc 0.5556\nMacro-F1 0.5509\nDefective-F1 0.5045",
             "Acc 0.5523\nMacro-F1 0.5507\nDefective-F1 0.5236",
-            "当前最稳的 LLM 结果；相比 zero-shot，test macro-F1 提升约 +0.0337。",
+            "当前最稳的 LLM 结果；相比 zero-shot，test macro-F1 提升约 +0.0327。",
         ],
         [
             "GraphCodeBERT baseline",
@@ -188,7 +188,7 @@ add_table(
 add_heading(doc, "4. Fine-tuning 前后对比", 1)
 add_body(
     doc,
-    "Fine-tuning 的提升不是特别巨大，但它是稳定且方向正确的：zero-shot test macro-F1 约为 0.5170，LoRA fine-tuned test macro-F1 约为 0.5507，提升约 +0.0337；defective-F1 从 0.4825 提升到 0.5236，说明模型对缺陷类的识别能力确实变好。",
+    "Fine-tuning 的提升不是特别巨大，但它是稳定且方向正确的：zero-shot test macro-F1 约为 0.5180，LoRA fine-tuned test macro-F1 约为 0.5507，提升约 +0.0327；defective-F1 从 0.4545 提升到 0.5236，说明模型对缺陷类的识别能力确实变好。",
 )
 add_body(
     doc,
