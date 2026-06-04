@@ -87,5 +87,6 @@ src/           reusable package code
 slurm/         Tillicum / Hyak job templates
 data/          raw and processed local dataset cache
 outputs/       metrics, predictions, adapters, and run logs
-docs/          method-design document
+results/       report-ready metrics and figures
+demo.ipynb     demo notebook that reads completed outputs
 ```
