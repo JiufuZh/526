@@ -115,16 +115,15 @@ def main():
 **Project:** Code Defect Detection with Qwen, LoRA Fine-Tuning, and GraphCodeBERT  
 **Purpose of this notebook:** This is the ready-to-show demo version. The result cells are already populated, so we can present without retraining any model live.
 
-**Opening line to say:**  
-\"Our project asks whether prompt-only large language models are enough for code defect detection, or whether task adaptation and code-specific pretraining are necessary.\"
+**Demo introduction:**  
+This project asks whether prompt-only large language models are enough for code defect detection, or whether task adaptation and code-specific pretraining are necessary.
 """
         ),
         md_cell(
             """
 ## 1. Problem and Motivation
 
-**Say this:**  
-\"The task is binary code defect detection. Given a C/C++ function, the model predicts whether it is non-defective or defective. This matters because manual code review is expensive, defects can be subtle, and false negatives can leave vulnerable code undetected.\"
+This section introduces the binary code defect detection task. Given a C/C++ function, the model predicts whether it is non-defective or defective. This matters because manual code review is expensive, defects can be subtle, and false negatives can leave vulnerable code undetected.
 
 **Key point:** We are not only trying one model. We compare a ladder of methods from low-cost prompting to supervised code-specific modeling.
 """
@@ -133,8 +132,7 @@ def main():
             """
 ## 2. Research Question
 
-**Say this:**  
-\"Our research question is: for code defect detection, how far can we get with prompt-only LLMs, and when do fine-tuning or code-specific encoders become more effective?\"
+This section states the main research question: for code defect detection, how far can prompt-only LLMs go, and when do fine-tuning or code-specific encoders become more effective?
 
 The experiment design directly answers this question:
 
@@ -153,8 +151,7 @@ The experiment design directly answers this question:
             """
 ## 3. Dataset and Evaluation
 
-**Say this:**  
-\"We use the CodeXGLUE defect detection benchmark. The label is binary: 0 for non-defective and 1 for defective. We report both validation and test results.\"
+This section summarizes the dataset and metrics. We use the CodeXGLUE defect detection benchmark, where the label is binary: 0 for non-defective and 1 for defective. We report both validation and test results.
 
 **Evaluation measures to mention:**
 
@@ -163,8 +160,7 @@ The experiment design directly answers this question:
 - Defective-F1 and defective recall: most important for whether the model actually catches defective code.
 - Confusion matrix: shows false positives and false negatives directly.
 
-**Say this:**  
-\"Accuracy alone can be misleading here, because a model can look acceptable while missing the defective class. That is exactly why we emphasize Macro-F1 and Defective-F1.\"
+Accuracy alone can be misleading here, because a model can look acceptable while missing the defective class. That is why the demo emphasizes Macro-F1 and Defective-F1.
 """
         ),
         code_cell(
@@ -183,6 +179,9 @@ metric_files = {
     ("Qwen 4-shot", "test"): RESULTS / "four_shot_test_metrics.json",
     ("Qwen LoRA fine-tuned", "validation"): RESULTS / "lora_validation_metrics.json",
     ("Qwen LoRA fine-tuned", "test"): RESULTS / "lora_test_metrics.json",
+    ("Majority baseline", "test"): RESULTS / "majority_test_metrics.json",
+    ("TF-IDF Linear SVM", "test"): RESULTS / "tfidf_linear_svm_test_metrics.json",
+    ("TF-IDF Logistic Regression", "test"): RESULTS / "tfidf_logreg_test_metrics.json",
     ("GraphCodeBERT", "validation"): RESULTS / "graphcodebert_validation_metrics.json",
     ("GraphCodeBERT", "test"): RESULTS / "graphcodebert_test_metrics.json",
 }
@@ -214,8 +213,7 @@ print(df.sort_values(["split", "macro_f1"], ascending=[True, False]).to_string(i
             f"""
 ## 4. Results Summary
 
-**Say this:**  
-\"This table shows all completed validation and test metrics. Every main model now has both validation and test results.\"
+This section summarizes all completed validation and test metrics. The table includes prompt-only Qwen, LoRA fine-tuning, traditional CPU baselines, and GraphCodeBERT.
 
 {table_markdown(all_results[["method", "split", "accuracy", "macro_f1", "defective_f1", "defective_recall"]])}
 """
@@ -232,8 +230,7 @@ print(test_df[["method", "accuracy", "macro_f1", "defective_f1", "defective_reca
             f"""
 ## 5. Final Test-Set Ranking
 
-**Say this:**  
-\"On the test split, GraphCodeBERT has the strongest Macro-F1 at 0.6517. TF-IDF Logistic Regression is surprisingly competitive and has the best Defective-F1 at 0.6088. This means simple lexical baselines are strong, but the code-specific encoder is still the best balanced model overall.\"
+This section ranks models on the held-out test split. GraphCodeBERT has the strongest Macro-F1 at 0.6517. TF-IDF Logistic Regression is surprisingly competitive and has the best Defective-F1 at 0.6088. This means simple lexical baselines are strong, while the code-specific encoder is still the best balanced model overall.
 
 {table_markdown(test_view)}
 
@@ -245,11 +242,9 @@ print(test_df[["method", "accuracy", "macro_f1", "defective_f1", "defective_reca
             """
 ## 6. Why 4-shot Collapsed
 
-**Say this:**  
-\"The 4-shot result is not missing; it is a negative result. It predicted every test sample as non-defective, so its defective precision, recall, and F1 are all zero.\"
+This section explains the 4-shot result. The result is not missing; it is a negative result. The 4-shot model predicted every test sample as non-defective, so its defective precision, recall, and F1 are all zero.
 
-**Explanation to say:**  
-\"This shows that adding only four examples to the prompt was not enough for reliable code defect detection. The model learned a conservative output pattern instead of learning the defect signal. That supports our broader conclusion: prompt-only adaptation is weak for this task.\"
+This shows that adding only four examples to the prompt was not enough for reliable code defect detection. The model learned a conservative output pattern instead of learning the defect signal. That supports the broader conclusion that prompt-only adaptation is weak for this task.
 """
         ),
         code_cell(
@@ -267,18 +262,16 @@ for _, row in test_df.iterrows():
             """
 ## 7. Confusion Matrix Figure
 
-**Say this while showing this figure:**  
-\"The confusion matrices make the story visible. The 4-shot and majority baselines put everything into the non-defective column. TF-IDF Logistic Regression catches many defective examples, and GraphCodeBERT gives the best balanced Macro-F1.\"
+This figure makes the model behavior visible. The 4-shot and majority baselines put everything into the non-defective column. TF-IDF Logistic Regression catches many defective examples, and GraphCodeBERT gives the best balanced Macro-F1.
 
 ![Confusion matrix overview](results/figures/confusion_matrices_overview.png)
 """
         ),
         md_cell(
             """
-## 8. Demo Walkthrough Script
+## 8. Demo Walkthrough
 
-**Say this:**  
-\"For reproducibility, our code and outputs are organized in the GitHub repository. The key scripts are in `scripts/`, configurations are in `configs/`, and final metrics and figures are in `results/`.\"
+This section identifies the files to show during the live demo. The code and outputs are organized in the GitHub repository: key scripts are in `scripts/`, configurations are in `configs/`, and final metrics and figures are in `results/`.
 
 Recommended live clicks:
 
@@ -310,8 +303,7 @@ for path in artifact_paths:
             """
 ## 9. Limitations and Future Work
 
-**Say this:**  
-\"This is not a solved defect detector. The best model is GraphCodeBERT, but its test Macro-F1 is about 0.65, so there is still room for improvement.\"
+This section frames the limitations. The project does not claim to solve defect detection completely. The best model is GraphCodeBERT, but its test Macro-F1 is about 0.65, so there is still room for improvement.
 
 Future work:
 
@@ -326,8 +318,7 @@ Future work:
             """
 ## 10. Closing Statement
 
-**Say this:**  
-\"Our final conclusion is that prompt-only LLMs are not reliable enough for this code defect detection task. Traditional TF-IDF baselines are surprisingly strong, LoRA fine-tuning helps the LLM, and GraphCodeBERT gives the best balanced performance. This suggests that task supervision and code-aware modeling are both important for practical defect detection.\"
+The final conclusion is that prompt-only LLMs are not reliable enough for this code defect detection task. Traditional TF-IDF baselines are surprisingly strong, LoRA fine-tuning helps the LLM, and GraphCodeBERT gives the best balanced performance. This suggests that task supervision and code-aware modeling are both important for practical defect detection.
 
 **Repo:** https://github.com/JiufuZh/526
 """
