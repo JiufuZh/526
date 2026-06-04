@@ -178,8 +178,8 @@ def main():
     add_heading(doc, "1. One-Paragraph Project Summary", 1)
     doc.add_paragraph(
         "This project evaluates whether large language models and code-specific encoders can detect defective C/C++ functions from the CodeXGLUE defect detection benchmark. "
-        "We compare four increasingly task-adapted approaches: zero-shot Qwen, 4-shot Qwen, LoRA fine-tuned Qwen, and a supervised GraphCodeBERT encoder baseline. "
-        "The main finding is that prompt-only LLM use is not reliable for this task, LoRA fine-tuning improves stability but remains limited, and GraphCodeBERT achieves the strongest validation and test performance."
+        "We compare prompt-only Qwen, LoRA fine-tuned Qwen, traditional TF-IDF CPU baselines, and a supervised GraphCodeBERT encoder baseline. "
+        "The main finding is that prompt-only LLM use is not reliable for this task, TF-IDF baselines are surprisingly competitive, and GraphCodeBERT achieves the strongest balanced test Macro-F1."
     )
 
     add_heading(doc, "2. Rubric-Aligned Goals", 1)
@@ -199,9 +199,9 @@ def main():
         [
             "Start with the problem: manual defect detection is costly, and code vulnerabilities are subtle.",
             "Frame the research question: are prompt-only LLMs enough, or do we need task adaptation/code-specific models?",
-            "Introduce the experimental ladder: zero-shot -> 4-shot -> LoRA fine-tuning -> GraphCodeBERT.",
+            "Introduce the experimental ladder: zero-shot -> 4-shot -> LoRA fine-tuning -> TF-IDF baselines -> GraphCodeBERT.",
             "Show validation/test metrics and confusion matrices.",
-            "Interpret the result: GraphCodeBERT is strongest; 4-shot collapse is a useful negative result.",
+            "Interpret the result: GraphCodeBERT has the best balanced Macro-F1; TF-IDF Logistic Regression is surprisingly strong; 4-shot collapse is a useful negative result.",
             "Close with limitations, future work, and reproducible repo/output locations.",
         ],
     )
@@ -214,6 +214,9 @@ def main():
             ["Qwen zero-shot", "Test raw LLM reasoning from prompt only", "None", "Validation + test complete"],
             ["Qwen 4-shot", "Test in-context learning with examples", "Prompt examples only", "Validation + test complete; collapsed to non-defective"],
             ["Qwen LoRA", "Task-adapt Qwen with efficient fine-tuning", "Supervised LoRA adapter", "Training + validation + test complete"],
+            ["Majority baseline", "Sanity-check majority-class behavior", "Most frequent class", "Test complete"],
+            ["TF-IDF Linear SVM", "Compare against a traditional lexical ML baseline", "Supervised CPU classifier", "Test complete"],
+            ["TF-IDF Logistic Regression", "Compare against a strong lexical ML baseline", "Supervised CPU classifier", "Test complete"],
             ["GraphCodeBERT", "Compare against code-specific encoder", "Supervised encoder classifier", "Training + validation + test complete"],
         ],
         [1.45, 2.25, 1.45, 2.25],
@@ -245,6 +248,9 @@ def main():
             ["Qwen 4-shot", "Test", "0.5406", "0.3509", "0.0000", "Useful negative result"],
             ["Qwen LoRA", "Validation", "0.5556", "0.5509", "0.5045", "Stable but limited improvement"],
             ["Qwen LoRA", "Test", "0.5523", "0.5507", "0.5236", "Main fine-tuned LLM result"],
+            ["Majority baseline", "Test", "0.5406", "0.3509", "0.0000", "Sanity check; same collapse as 4-shot"],
+            ["TF-IDF Linear SVM", "Test", "0.6007", "0.5994", "0.5766", "Strong lexical CPU baseline"],
+            ["TF-IDF Logistic Regression", "Test", "0.6223", "0.6218", "0.6088", "Strongest traditional CPU baseline"],
             ["GraphCodeBERT", "Validation", "0.6618", "0.6513", "0.5908", "Best validation result"],
             ["GraphCodeBERT", "Test", "0.6589", "0.6517", "0.6017", "Best test result"],
         ],
@@ -254,7 +260,7 @@ def main():
     add_note(
         doc,
         "Main conclusion",
-        "For code defect detection, a code-specific supervised encoder outperformed prompt-only Qwen and LoRA fine-tuned Qwen. The result suggests task supervision and code-pretraining matter more than simply adding few-shot examples.",
+        "For code defect detection, supervised baselines outperform prompt-only Qwen. TF-IDF Logistic Regression is surprisingly competitive, while GraphCodeBERT gives the strongest balanced test Macro-F1. The result suggests task supervision and code-aware modeling matter more than simply adding few-shot examples.",
     )
 
     add_heading(doc, "7. Suggested 10-Minute Demo Deck", 1)
@@ -266,9 +272,9 @@ def main():
             ["2", "Problem & Motivation", "1:00", "Explain why defect detection matters and why this is hard."],
             ["3", "Research Question", "0:45", "Prompt-only LLM vs fine-tuned LLM vs code encoder."],
             ["4", "Dataset & Task", "1:00", "CodeXGLUE, binary labels, validation/test splits."],
-            ["5", "Model Ladder", "1:15", "Zero-shot, 4-shot, LoRA, GraphCodeBERT."],
+            ["5", "Model Ladder", "1:15", "Zero-shot, 4-shot, LoRA, TF-IDF baselines, GraphCodeBERT."],
             ["6", "Evaluation Metrics", "0:45", "Macro-F1, Defective-F1, confusion matrix."],
-            ["7", "Result Table", "1:30", "GraphCodeBERT wins; 4-shot collapse explained."],
+            ["7", "Result Table", "1:30", "GraphCodeBERT has best Macro-F1; TF-IDF Logistic Regression is competitive; 4-shot collapse explained."],
             ["8", "Confusion Matrices", "1:00", "Show false positives/false negatives visually."],
             ["9", "Live Demo / Repo Walkthrough", "1:00", "Show GitHub repo, outputs, metrics files, scripts."],
             ["10", "Conclusion & Next Steps", "0:30", "State takeaway and future improvements."],
@@ -293,16 +299,19 @@ Required slide flow:
 2. Problem and motivation: detecting defective C/C++ functions is important for software quality and security.
 3. Research question: are prompt-only LLMs enough, or do task adaptation and code-specific pretraining matter?
 4. Dataset/task: CodeXGLUE defect detection; binary labels non-defective vs defective.
-5. Methods: Qwen zero-shot, Qwen 4-shot, Qwen LoRA fine-tuning, GraphCodeBERT supervised encoder.
+5. Methods: Qwen zero-shot, Qwen 4-shot, Qwen LoRA fine-tuning, majority baseline, TF-IDF Linear SVM, TF-IDF Logistic Regression, and GraphCodeBERT supervised encoder.
 6. Evaluation: accuracy, macro precision/recall/F1, defective precision/recall/F1, confusion matrix.
 7. Main results table using these numbers:
    - Zero-shot test: Accuracy 0.5264, Macro-F1 0.5180, Defective-F1 0.4545.
    - 4-shot test: Accuracy 0.5406, Macro-F1 0.3509, Defective-F1 0.0000.
    - LoRA test: Accuracy 0.5523, Macro-F1 0.5507, Defective-F1 0.5236.
+   - Majority baseline test: Accuracy 0.5406, Macro-F1 0.3509, Defective-F1 0.0000.
+   - TF-IDF Linear SVM test: Accuracy 0.6007, Macro-F1 0.5994, Defective-F1 0.5766.
+   - TF-IDF Logistic Regression test: Accuracy 0.6223, Macro-F1 0.6218, Defective-F1 0.6088.
    - GraphCodeBERT test: Accuracy 0.6589, Macro-F1 0.6517, Defective-F1 0.6017.
-8. Confusion matrix slide: emphasize that 4-shot collapsed to non-defective, while GraphCodeBERT catches more defective samples.
+8. Confusion matrix slide: emphasize that 4-shot and majority collapsed to non-defective, TF-IDF Logistic Regression catches many defective samples, and GraphCodeBERT has the best balanced Macro-F1.
 9. Demo slide: show repo, scripts, metrics JSON files, figures, and reproducibility.
-10. Conclusion: prompt-only LLMs are weak for this task; LoRA helps but code-specific supervised GraphCodeBERT is strongest.
+10. Conclusion: prompt-only LLMs are weak for this task; TF-IDF baselines are strong; GraphCodeBERT is the best balanced model.
 
 Design requirements:
 - Keep the deck to about 10 slides.
@@ -324,6 +333,7 @@ Design requirements:
             "GraphCodeBERT metrics: results/graphcodebert_validation_metrics.json and results/graphcodebert_test_metrics.json",
             "LoRA metrics: results/lora_validation_metrics.json and results/lora_test_metrics.json",
             "Zero-shot and 4-shot metrics: results/zero_shot_*_metrics.json and results/four_shot_*_metrics.json",
+            "CPU baseline test metrics: results/majority_test_metrics.json, results/tfidf_linear_svm_test_metrics.json, and results/tfidf_logreg_test_metrics.json",
             "Tillicum project path: /gpfs/projects/imt526a/group8/final",
         ],
     )

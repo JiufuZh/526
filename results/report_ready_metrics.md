@@ -6,6 +6,9 @@
 | results/four_shot_test_metrics.json | 0.5406 | 0.3509 | 0.0000 | 0.0000 | 1477 | 0 | 1255 | 0 |
 | results/lora_validation_metrics.json | 0.5556 | 0.5509 | 0.5045 | 0.5206 | 900 | 645 | 569 | 618 |
 | results/lora_test_metrics.json | 0.5523 | 0.5507 | 0.5236 | 0.5355 | 837 | 640 | 583 | 672 |
+| results/majority_test_metrics.json | 0.5406 | 0.3509 | 0.0000 | 0.0000 | 1477 | 0 | 1255 | 0 |
+| results/tfidf_linear_svm_test_metrics.json | 0.6007 | 0.5994 | 0.5766 | 0.5920 | 898 | 579 | 512 | 743 |
+| results/tfidf_logreg_test_metrics.json | 0.6223 | 0.6218 | 0.6088 | 0.6398 | 897 | 580 | 452 | 803 |
 | results/graphcodebert_validation_metrics.json | 0.6618 | 0.6513 | 0.5908 | 0.5619 | 1141 | 404 | 520 | 667 |
 | results/graphcodebert_test_metrics.json | 0.6589 | 0.6517 | 0.6017 | 0.5610 | 1096 | 381 | 551 | 704 |
 | outputs/baselines/majority_validation_metrics.json | 0.5655 | 0.3612 | 0.0000 | 0.0000 | 1545 | 0 | 1187 | 0 |

@@ -18,6 +18,9 @@ METRIC_FILES = {
     ("Qwen 4-shot", "test"): RESULTS / "four_shot_test_metrics.json",
     ("Qwen LoRA fine-tuned", "validation"): RESULTS / "lora_validation_metrics.json",
     ("Qwen LoRA fine-tuned", "test"): RESULTS / "lora_test_metrics.json",
+    ("Majority baseline", "test"): RESULTS / "majority_test_metrics.json",
+    ("TF-IDF Linear SVM", "test"): RESULTS / "tfidf_linear_svm_test_metrics.json",
+    ("TF-IDF Logistic Regression", "test"): RESULTS / "tfidf_logreg_test_metrics.json",
     ("GraphCodeBERT", "validation"): RESULTS / "graphcodebert_validation_metrics.json",
     ("GraphCodeBERT", "test"): RESULTS / "graphcodebert_test_metrics.json",
 }
@@ -140,6 +143,9 @@ The experiment design directly answers this question:
 | Qwen zero-shot | Raw prompt-only LLM reasoning | none |
 | Qwen 4-shot | In-context examples without training | prompt examples |
 | Qwen LoRA | Lightweight supervised LLM fine-tuning | LoRA adapter |
+| Majority baseline | Sanity-check baseline | most frequent class |
+| TF-IDF Linear SVM | Traditional lexical ML baseline | supervised CPU classifier |
+| TF-IDF Logistic Regression | Traditional lexical ML baseline | supervised CPU classifier |
 | GraphCodeBERT | Code-specific supervised encoder | full classifier head training |
 """
         ),
@@ -227,12 +233,12 @@ print(test_df[["method", "accuracy", "macro_f1", "defective_f1", "defective_reca
 ## 5. Final Test-Set Ranking
 
 **Say this:**  
-\"On the test split, GraphCodeBERT is the strongest model. It reaches Macro-F1 0.6517 and Defective-F1 0.6017. LoRA fine-tuned Qwen improves over prompt-only methods, but it is still clearly below GraphCodeBERT.\"
+\"On the test split, GraphCodeBERT has the strongest Macro-F1 at 0.6517. TF-IDF Logistic Regression is surprisingly competitive and has the best Defective-F1 at 0.6088. This means simple lexical baselines are strong, but the code-specific encoder is still the best balanced model overall.\"
 
 {table_markdown(test_view)}
 
 **Main takeaway sentence:**  
-\"For this task, code-specific supervised modeling works better than simply prompting a general-purpose LLM.\"
+\"For this task, supervised models work better than prompt-only LLMs, and the code-specific GraphCodeBERT model gives the best balanced performance.\"
 """
         ),
         md_cell(
@@ -262,7 +268,7 @@ for _, row in test_df.iterrows():
 ## 7. Confusion Matrix Figure
 
 **Say this while showing this figure:**  
-\"The confusion matrices make the story visible. The 4-shot model puts everything into the non-defective column. GraphCodeBERT has both false positives and false negatives, but it catches substantially more defective examples than the prompt-only baselines.\"
+\"The confusion matrices make the story visible. The 4-shot and majority baselines put everything into the non-defective column. TF-IDF Logistic Regression catches many defective examples, and GraphCodeBERT gives the best balanced Macro-F1.\"
 
 ![Confusion matrix overview](results/figures/confusion_matrices_overview.png)
 """
@@ -321,7 +327,7 @@ Future work:
 ## 10. Closing Statement
 
 **Say this:**  
-\"Our final conclusion is that prompt-only LLMs are not reliable enough for this code defect detection task. LoRA fine-tuning helps, but the strongest result comes from the code-specific supervised GraphCodeBERT baseline. This suggests that task supervision and code pretraining are both important for practical defect detection.\"
+\"Our final conclusion is that prompt-only LLMs are not reliable enough for this code defect detection task. Traditional TF-IDF baselines are surprisingly strong, LoRA fine-tuning helps the LLM, and GraphCodeBERT gives the best balanced performance. This suggests that task supervision and code-aware modeling are both important for practical defect detection.\"
 
 **Repo:** https://github.com/JiufuZh/526
 """

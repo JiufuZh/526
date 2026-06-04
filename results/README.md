@@ -17,6 +17,8 @@ checkpoints, cached datasets, and Hugging Face model files.
 | Qwen 4-shot | test | 0.5406 | 0.3509 | 0.0000 | Collapsed to non-defective predictions |
 | Qwen LoRA fine-tuned | validation | 0.5556 | 0.5509 | 0.5045 | Main fine-tuned LLM result |
 | Qwen LoRA fine-tuned | test | 0.5523 | 0.5507 | 0.5236 | Main fine-tuned LLM result |
+| TF-IDF Linear SVM | test | 0.6007 | 0.5994 | 0.5766 | Strong lexical CPU baseline |
+| TF-IDF Logistic Regression | test | 0.6223 | 0.6218 | 0.6088 | Strongest traditional CPU baseline |
 | GraphCodeBERT | validation | 0.6618 | 0.6513 | 0.5908 | Strongest validation result |
 | GraphCodeBERT | test | 0.6589 | 0.6517 | 0.6017 | Strongest test result |
 
@@ -38,6 +40,7 @@ test metrics. It is the strongest baseline in the current result matrix.
 - `zero_shot_*_metrics.json`: zero-shot baseline metrics.
 - `four_shot_*_metrics.json`: 4-shot baseline metrics.
 - `graphcodebert_*_metrics.json`: GraphCodeBERT validation/test metrics.
+- `tfidf_*_test_metrics.json` and `majority_test_metrics.json`: traditional CPU baseline test metrics.
 - `report_ready_metrics.csv` and `report_ready_metrics.md`: compact report tables.
 - `error_analysis_*_taxonomy.csv`: error-analysis summaries.
 - `logs/graphcodebert-131579.err`: first failed GraphCodeBERT run log kept for provenance.
