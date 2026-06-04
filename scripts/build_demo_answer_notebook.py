@@ -110,10 +110,9 @@ def main():
     cells = [
         md_cell(
             """
-# Group 8 Demo Notebook
+# Group 8 Demo
 
 **Project:** Code Defect Detection with Qwen, LoRA Fine-Tuning, and GraphCodeBERT  
-**Purpose of this notebook:** This is the ready-to-show demo notebook. The result cells are already populated, so the project can be presented without retraining any model live.
 
 **Demo introduction:**  
 This project asks whether prompt-only large language models are enough for code defect detection, or whether task adaptation and code-specific pretraining are necessary.
@@ -271,15 +270,15 @@ This figure makes the model behavior visible. The 4-shot and majority baselines 
             """
 ## 8. Demo Walkthrough
 
-This section identifies the files to show during the live demo. The code and outputs are organized in the GitHub repository: key scripts are in `scripts/`, configurations are in `configs/`, and final metrics and figures are in `results/`.
+This section identifies the main project artifacts. The code and outputs are organized in the GitHub repository: key scripts are in `scripts/`, configurations are in `configs/`, and final metrics and figures are in `results/`.
 
-Recommended live clicks:
+Demo artifact checklist:
 
-1. Open `results/report_ready_metrics.md`.
-2. Open `results/figures/confusion_matrices_overview.png`.
-3. Open `scripts/train_encoder_baseline.py` and `scripts/evaluate_encoder_baseline.py`.
-4. Open `configs/encoder_graphcodebert.yaml`.
-5. Point out that `demo.ipynb` reads completed outputs and does not require retraining.
+1. `results/report_ready_metrics.md`: final metrics table.
+2. `results/figures/confusion_matrices_overview.png`: visual comparison of model behavior.
+3. `scripts/train_encoder_baseline.py` and `scripts/evaluate_encoder_baseline.py`: GraphCodeBERT training and evaluation.
+4. `configs/encoder_graphcodebert.yaml`: GraphCodeBERT experiment configuration.
+5. `demo.ipynb`: completed demo notebook that reads saved outputs.
 """
         ),
         code_cell(
